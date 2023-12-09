@@ -1,3 +1,5 @@
+# Reptile and FOMAML.
+
 # Getting the data
 
 The [fetch_data.sh](fetch_data.sh) script creates a `data/` directory and downloads Omniglot into it. 
