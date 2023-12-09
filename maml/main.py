@@ -3,6 +3,9 @@ Usage Instructions:
     5-way, 1-shot omniglot:
         python main.py --datasource=omniglot --metatrain_iterations=60000 --meta_batch_size=32 --update_batch_size=1 --update_lr=0.4 --num_updates=1 --logdir=logs/omniglot5way/
 
+    5-way, 5-shot omniglot:
+        python main.py --datasource=omniglot --metatrain_iterations=60000 --meta_batch_size=4 --update_batch_size=5 --update_lr=0.01 --num_updates=5 --num_classes=5 --logdir=logs/omniglot5shot5way/
+
     20-way, 1-shot omniglot:
         python main.py --datasource=omniglot --metatrain_iterations=60000 --meta_batch_size=16 --update_batch_size=1 --num_classes=20 --update_lr=0.1 --num_updates=5 --logdir=logs/omniglot20way/
 
