@@ -1,0 +1,48 @@
+#!/bin/bash
+
+#SBATCH --gres=gpu:1
+#SBATCH --partition=gorman-gpu
+#SBATCH --time=24:00:00
+
+
+cd /homes/patil127/scratch/sml/supervised-reptile
+
+conda init bash
+
+# actiate your virtual environment
+conda activate sml_project
+
+
+nvidia-smi
+
+pip install --extra-index-url https://pypi.nvidia.com tensorrt-bindings==8.6.1 tensorrt-libs==8.6.1
+pip install tensorflow_gpu==1.15.0
+
+
+# run your python script
+
+echo "------------------------------------------------------------------------------------------------------"
+echo "5-shot 20-way Omniglot."
+echo "------------------------------------------------------------------------------------------------------"
+# 5-shot 20-way Omniglot.
+python -u run_omniglot.py --classes 20 --inner-batch 20 --inner-iters 10 --meta-step 1 --meta-batch 5 --meta-iters 40000 --eval-batch 10 --eval-iters 50 --learning-rate 0.0005 --meta-step-final 0 --train-shots 10 --checkpoint logs/5shot_20way
+
+
+echo "------------------------------------------------------------------------------------------------------"
+echo "5-shot 20-way Omniglot. Transductive"
+echo "------------------------------------------------------------------------------------------------------"
+# 5-shot 20-way Omniglot.
+python -u run_omniglot.py --classes 20 --inner-batch 20 --inner-iters 10 --meta-step 1 --meta-batch 5 --meta-iters 40000 --eval-batch 10 --eval-iters 50 --learning-rate 0.0005 --meta-step-final 0 --train-shots 10 --checkpoint logs/5shot_20way_trans --transductive
+
+echo "------------------------------------------------------------------------------------------------------"
+echo "5-shot 20-way Omniglot. FOML"
+echo "------------------------------------------------------------------------------------------------------"
+# 5-shot 20-way Omniglot.
+python -u run_omniglot.py --classes 20 --inner-batch 20 --inner-iters 10 --meta-step 1 --meta-batch 5 --meta-iters 40000 --eval-batch 10 --eval-iters 50 --learning-rate 0.0005 --meta-step-final 0 --train-shots 10 --checkpoint logs/5shot_20way_foml --foml
+
+
+echo "------------------------------------------------------------------------------------------------------"
+echo "5-shot 20-way Omniglot. Transductive FOML"
+echo "------------------------------------------------------------------------------------------------------"
+# 5-shot 20-way Omniglot.
+python -u run_omniglot.py --classes 20 --inner-batch 20 --inner-iters 10 --meta-step 1 --meta-batch 5 --meta-iters 40000 --eval-batch 10 --eval-iters 50 --learning-rate 0.0005 --meta-step-final 0 --train-shots 10 --checkpoint logs/5shot_20way_trans_foml --transductive --foml
